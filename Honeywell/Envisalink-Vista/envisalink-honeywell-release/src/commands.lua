@@ -33,6 +33,7 @@ local evlFunctions = {
   bypass      = 'bypass_zone_partition',
   triggerOne  = 'trigger_one_partition',
   triggerTwo  = 'trigger_two_partition',
+  soundSiren = 'sound_siren_partition',
 }
 
 ----------------

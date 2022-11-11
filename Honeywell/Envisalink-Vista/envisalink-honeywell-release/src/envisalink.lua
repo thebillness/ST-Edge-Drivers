@@ -332,6 +332,16 @@ function handlers.handle_login_timeout(driver,sock)
 	log.error ('Envisalink login failed - timeout')
 end
 
+function evlClient.sound_siren_partition(driver,code,partitionNumber)
+	-- Send Siren Speed Key
+	local to_send = code .. conf.sirenKey
+	if tonumber(partitionNumber) == 1 then
+		send_raw(driver,to_send)
+	else
+		keypresses_to_partition(driver,partitionNumber,to_send)
+	end
+end
+
 local function get_partition_state(flags, alpha)
 	if flags.alarm or flags.alarm_fire_zone or flags.fire then
 		return 'alarm'

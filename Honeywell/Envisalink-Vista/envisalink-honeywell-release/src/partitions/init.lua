@@ -172,6 +172,25 @@ local function chime_handler(driver,device,cmd)
   commands.send_evl_command(driver,args)
 end
 
+local function siren_handler(driver,device,cmd)
+  log.info('SmartThings Home Monitor has triggered Siren!')
+  if conf.sirenKey ~= nil then
+    local partition = device.device_network_id:match('envisalink|p|(%d+)') .. ''
+    local args = {
+        ['partition'] = partition,
+        ['command']   = 'soundSiren',
+      }
+    if tonumber(partition) == 1 or tonumber(partition) == 2 then
+      commands.send_evl_command(driver,args)
+    else
+      log.error (string.format('Could not determine partition number for %s',device.device_network_id))
+    end
+  else
+    log.info('SirenKey not set.')
+  end
+end
+
+
 ---------------------------------------
 -- Partition Sub-Driver
 local partition_driver = {
@@ -195,6 +214,9 @@ local partition_driver = {
     [capabilities.chime.ID] = {
       [capabilities.chime.commands.chime.NAME] = chime_handler,
       [capabilities.chime.commands.off.NAME] = chime_handler,
+    },
+    [capabilities.alarm.ID] = {
+      [capabilities.alarm.commands.siren.NAME] = siren_handler,
     }
   },
   can_handle = can_handle_partitions,

@@ -41,6 +41,7 @@ local function initconfigEVL(device)
   conf.password = device.preferences.passwordEVL
   conf.zoneclosedelay = tonumber(device.preferences.zoneCloseDelay)
   conf.wiredzonemax = tonumber(device.preferences.wiredZoneMax)
+  conf.sirenKey = device.preferences.sirenKey
 
   if conf.alarmcode ~= nil then
     if string.len(device.preferences.alarmCodeEVL) ~= 4 then
@@ -50,6 +51,12 @@ local function initconfigEVL(device)
     log.warn('Invalid alarmcode (not a number)')
   end
   
+  if conf.sirenKey ~= nil then
+    if string.len(device.preferences.alarmCodeEVL) ~= 1 then
+      log.warn('Speed Key invalid. Must be A, B, C or D.')
+    end
+  end
+
   log.info (string.format('Using config prefs: %s:%d, alarmcode: %d', conf.ip, conf.port, conf.alarmcode))
   return(addr_is_valid)
 

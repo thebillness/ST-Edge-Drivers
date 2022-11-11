@@ -19,6 +19,8 @@ components:
     version: 1
   - id: refresh
     version: 1
+  - id: alarm
+    version: 1
   categories:
   - name: SecurityPanel
 metadata:
@@ -180,3 +182,11 @@ preferences:
     preferenceType: boolean
     definition:
       default: false
+  - title: "Police Panic Speed Key"
+    name: sirenKey
+    description: "The speed key (ABCD) set to Police Panic. This allows SHM to sound the alarm siren."
+    required: false
+    preferenceType: string
+    definition:
+      stringType: text
+      default: ''
